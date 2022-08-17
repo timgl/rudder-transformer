@@ -1,0 +1,29 @@
+[
+    {
+        "userId": "identified user id",
+        "anonymousId":"anon-id-new",
+        "context": {
+          "traits": {
+              "firstName":"Anant",
+              "lastName":"jain",
+             "role": "Manager" ,
+             "address":"Flat No 58 ABC building XYZ Area near PQRS , 354408",
+             "hasPurchased":"yes",
+             "email":"abc@xyz.com",
+             "title":"Mr",
+             "phone":"9876543212",
+             "state":"Uttar Pradesh",
+             "zipcode":"243001",
+             "prospectOrCustomer":"Prospect",
+             "country":"India",
+             "website":"abc.com",
+             "subscriptionStatus":"New"
+          },
+          "ip": "14.5.67.21",
+          "library": {
+              "name": "http"
+          }
+        },
+        "originalTimestamp": "2020-02-02T00:23:09.544Z"
+      }
+]
