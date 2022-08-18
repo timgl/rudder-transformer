@@ -15,8 +15,7 @@ const urlDirectoryMap = {
   "bigquery.googleapis.com": "bqstream",
   "pi.pardot.com": "pardot",
   "googleads.googleapis.com": "google_adwords_remarketing_lists",
-  "graph.facebook.com": "facebook_pixel",
-  "api.wootric.com": "wootric"
+  "graph.facebook.com": "facebook_pixel"
 };
 
 function getData(url) {
