@@ -61,6 +61,7 @@
     "context.traits.middle_name"
   ],
   "phone": ["traits.phone", "context.traits.phone", "properties.phone"],
+  "age": ["traits.age", "context.traits.age", "properties.age"],
   "pageTitle": ["context.page.title", "properties.title"],
   "pageUrl": ["context.page.url", "properties.url"],
   "website": ["traits.website", "context.traits.website", "properties.website"],

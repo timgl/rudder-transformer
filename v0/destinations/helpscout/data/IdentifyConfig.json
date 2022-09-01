@@ -1,0 +1,148 @@
+[
+  {
+    "destKey": "customerId",
+    "sourceKeys": "userId",
+    "required": true,
+    "sourceFromGenericMap": true
+  },
+  {
+    "destKey": "firstName",
+    "sourceKeys": "firstName",
+    "required": false,
+    "sourceFromGenericMap": true
+  },
+  {
+    "destKey": "lastName",
+    "sourceKeys": "lastName",
+    "required": false,
+    "sourceFromGenericMap": true
+  },
+  {
+    "destKey": "address",
+    "sourceKeys": "address",
+    "required": false,
+    "sourceFromGenericMap": true
+  },
+  {
+    "destKey": "age",
+    "sourceKeys": "age",
+    "required": false,
+    "sourceFromGenericMap": true
+  },
+  {
+    "destKey": "jobTitle",
+    "sourceKeys": [
+      "traits.job_title",
+      "traits.jobTitle",
+      "context.traits.job_title",
+      "context.traits.jobTitle"
+    ],
+    "required": false
+  },
+  {
+    "destKey": "photoUrl",
+    "sourceKeys": ["traits.photoUrl", "context.traits.photoUrl"],
+    "required": false
+  },
+  {
+    "destKey": "background",
+    "sourceKeys": ["traits.background", "context.traits.background"],
+    "required": false
+  },
+  {
+    "destKey": "location",
+    "sourceKeys": ["traits.location", "context.traits.location"],
+    "required": false
+  },
+  {
+    "destKey": "emails",
+    "sourceKeys": "email",
+    "required": false,
+    "sourceFromGenericMap": true
+  },
+  {
+    "destKey": "phones",
+    "sourceKeys": "phone",
+    "required": false,
+    "sourceFromGenericMap": true
+  },
+  {
+    "destKey": "chats",
+    "sourceKeys": ["traits.chats", "context.traits.chats"],
+    "required": false
+  },
+  {
+    "destKey": "socialProfiles",
+    "sourceKeys": ["traits.socialProfile", "context.traits.socialProfile"],
+    "required": false
+  },
+  {
+    "destKey": "websites",
+    "sourceKeys": "website",
+    "required": false,
+    "sourceFromGenericMap": true
+  },
+  {
+    "destKey": "organization",
+    "sourceKeys": ["traits.organization", "context.traits.organization"],
+    "required": false
+  },
+  {
+    "destKey": "gender",
+    "sourceKeys": ["traits.gender", "context.traits.gender"],
+    "required": false,
+    "metadata": {
+      "s": [
+        {
+          "sourceVal": ["f", "F", "Female", "female", "FEMALE"],
+          "destVal": "female"
+        },
+        {
+          "sourceVal": ["m", "M", "Male", "male", "MALE"],
+          "destVal": "male"
+        },
+        {
+          "sourceVal": ["u", "U", "Unknown", "unknown", "UNKNOWN"],
+          "destVal": "unknown"
+        }
+      ]
+    }
+  },
+  {
+    "destKey": "photoType",
+    "sourceKeys": ["traits.photoType", "context.traits.photoType"],
+    "required": false,
+    "metadata": {
+      "s": [
+        {
+          "sourceVal": ["u", "U", "Unknown", "unknown", "UNKNOWN"],
+          "destVal": "unknown"
+        },
+        {
+          "sourceVal": ["gr", "GR", "Gravatar", "gravatar", "GRAVATAR"],
+          "destVal": "gravatar"
+        },
+        {
+          "sourceVal": ["t", "T", "Twitter", "twitter", "TWITTER"],
+          "destVal": "twitter"
+        },
+        {
+          "sourceVal": ["f", "F", "Unknown", "unknown", "UNKNOWN"],
+          "destVal": "facebook"
+        },
+        {
+          "sourceVal": ["Googleprofile", "googleprofile", "GOOGLEPROFILE"],
+          "destVal": "googleprofile"
+        },
+        {
+          "sourceVal": ["Googleplus", "googleplus", "GOOGLEPLUS"],
+          "destVal": "googleplus"
+        },
+        {
+          "sourceVal": ["l", "L", "Linkedin", "linkedin", "LINKEDIN"],
+          "destVal": "linkedin"
+        }
+      ]
+    }
+  }
+]
