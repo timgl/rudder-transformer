@@ -27,7 +27,7 @@ steps:
   template: |
     (
       $newMessage := $splitEventsForCreateUpdate([$], destination)[0].message;
-      $setContext("message", message)
+      $setContext("message", $newMessage)
     )
 - name: updatedEvent
   template: $getContext("message")
