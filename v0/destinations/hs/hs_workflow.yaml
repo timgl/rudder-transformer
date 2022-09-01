@@ -11,6 +11,7 @@ steps:
   template: |
     (
       $assert($exists(message.type), "Message type is not present. Aborting message.");
+      $assert(message.type in [$EventType.IDENTIFY, $EventType.TRACK], "Message type page is not supported");
       $validateDestinationConfig(destination);
     )
 - name: IsRETL

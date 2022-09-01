@@ -62,9 +62,6 @@ const expectedRouterDatarETLLegacy = JSON.parse(outputRouterDataFilerETLLegacy);
 describe(`${name} Tests`, () => {
   describe("Processor", () => {
     inputData.forEach(async (input, index) => {
-      if (index != 1) {
-        return
-      }
       it(`Payload - ${index}`, async () => {
         try {
           const result = await workflowEngine.execute(input);
