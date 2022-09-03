@@ -1,0 +1,61 @@
+bindings:
+  - path: ./bindings
+  - name: legacyBatchEvents
+    path: ./HSTransform-v1
+  - name: batchEvents
+    path: ./HSTransform-v2
+  - name: getProperties
+    path: ./util
+steps:
+- name: setProperties
+  condition: message.traits or message.context.traits or message.properties
+  template: |
+    ( 
+      $setContext("propertyMap", $getProperties($[0].destination))
+    )
+- name: isLegacyAPI
+  template: $not($exists($[0].destination.Config.apiVersion)) or $[0].destination.Config.apiVersion = $API_VERSION.v1
+- name: transform
+  externalWorkflow:
+    path: ./hs_single_workflow.yaml
+  loopOverInput: true
+- name: processTransformOutput
+  description: Separate Failed and successful events
+  template: |
+    (
+      $zipOutputAndInput := $zip($, $outputs.transform);
+      $successfulEvents := $filter($zipOutputAndInput, function($elem) {(
+        $exists($elem[1].output)
+      )});
+      $failedEvents := $filter($zipOutputAndInput, function($elem) {(
+        $exists($elem[1].error)
+      )});
+      {
+        "successfulEvents": $successfulEvents,
+        "failedEvents": $failedEvents
+      }
+    )
+- name: batchInput
+  template: |
+    (
+      $map($outputs.processTransformOutput.successfulEvents, function($elem) {(
+        {
+          "message": $type($elem[1].output) ? $elem[1].output[0] : $elem[1].output,
+          "metadata": $elem[0].metadata,
+          "destination": $elem[0].destination
+        }
+      )})
+    )
+- name: batchForLegacyAPI
+  condition: $outputs.isLegacyAPI
+  template: |
+    (
+      $legacyBatchEvents($outputs.batchInput)
+    )
+- name: batchForAPIV3
+  condition: $not($outputs.isLegacyAPI)
+  template: |
+    (
+      $batchEvents($outputs.batchInput)
+    )
+  
