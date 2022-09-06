@@ -6,6 +6,8 @@ bindings:
     path: ./HSTransform-v2
   - name: getProperties
     path: ./util
+  - name: sampleFunc
+    path: ./index
 steps:
 - name: setProperties
   condition: message.traits or message.context.traits or message.properties
@@ -36,6 +38,7 @@ steps:
       }
     )
 - name: batchInput
+  description: Prepare Input for batching
   template: |
     (
       $map($outputs.processTransformOutput.successfulEvents, function($elem) {(
@@ -58,4 +61,3 @@ steps:
     (
       $batchEvents($outputs.batchInput)
     )
-  

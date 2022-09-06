@@ -12,3 +12,7 @@ const batchWorkflow = V2.WorkflowUtils.createFromFilePath(
 );
 const batchWorkflowEngine = new V2.WorkflowEngine(batchWorkflow, __dirname);
 exports.batchWorkflowEngine = batchWorkflowEngine;
+
+export const sampleFunc = (input, ssdfsf, sdfdfs) => {
+  const output = bindings["httpGet"]("url", {})
+}
