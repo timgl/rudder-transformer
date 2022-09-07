@@ -73,7 +73,6 @@ describe(`${name} Tests`, () => {
           const result = await singleWorkflowEngine.execute(input);
           expect(result.output).toEqual(expectedData[index]);
         } catch (error) {
-          console.log(error);
           expect(error.message).toEqual(expectedData[index].error);
         }
       });

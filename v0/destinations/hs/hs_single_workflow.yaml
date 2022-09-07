@@ -1,6 +1,5 @@
 bindings:
 - path: ./util
-- path: ./bindings
 - name: API_VERSION
   path: ./config
 - name: EventType

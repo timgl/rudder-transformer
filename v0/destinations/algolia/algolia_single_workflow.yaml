@@ -1,0 +1,102 @@
+bindings:
+- name: EventType
+  path: ../../../constants
+- name: SourceKeys
+  path: ../../util/data/GenericFieldMapping.json
+  exportAll: true
+- path: ./util
+- name: defaultRequestConfig
+  path: ../../util/index
+- name: defaultPostRequestConfig
+  path: ../../util/index
+- name: ENDPOINT
+  path: ./config
+steps:
+- name: validationInput
+  template: |
+    (
+      $assert($exists(message.type), "Message type is not present. Aborting message.");
+      $assert($lowercase(message.type) = $EventType.TRACK, "Message type " & message.type & " is not supported");
+      $assert($exists(message.event), "event is required for track call");
+      $assert($exists(destination.Config.apiKey), "Invalid Api Key");
+      $assert($exists(destination.Config.applicationId), "Invalid Application Id");
+      $assert($exists(message.properties.index), "index is a required param")
+    )
+- name: prepareDestPayload
+  description: Prepare Payload for sending to destination
+  template: |
+    (
+      $eventTypeMap := $eventTypeMapping(destination.Config);
+      $event := message.event.$trim().$lowercase();
+      $eventType := message.properties.eventType ? message.properties.eventType : $lookup($eventTypeMap, $event);
+      $assert($exists($eventType), "eventType is mandatory for track call");
+      $payload := {
+        "index": message.properties.index,
+        "userToken": $getByPaths(message, $SourceKeys.userId)[0],
+        "timestamp": message.properties.timestamp,
+        "queryID": message.properties.queryId,
+        "filters": message.properties.filters,
+        "objectIDs": message.properties.objectIds,
+        "positions": message.properties.positions,
+        "eventName": $event,
+        "eventType": $eventType.$trim().$lowercase()
+      };
+      $setContext("payload", $genericpayloadValidator($payload))
+    )
+- name: populateProductsData
+  condition: $exists(message.properties.products)
+  steps:
+  - name: populateForClickEvent
+    condition: $context.payload.eventType = "click"
+    template: |
+      (
+        $validProducts := message.properties.products[$exists($.objectId) and $exists($.position)]#$i[$i<20];
+        $objectAndPositionIds := {
+          "objectIDs": $validProducts.objectId,
+          "positions": $validProducts.position
+        };
+        $newPayload := $merge([$context.payload, $objectAndPositionIds]);
+        $setContext("payload", $clickPayloadValidator($newPayload))
+      )
+  - name: populateForOtherEvents
+    condition: $context.payload.eventType != "click"
+    template: |
+      (
+        $objectIDs := {
+          "objectIDs": message.properties.products.objectId#$i[$i<20]
+        };
+        $setContext("payload", $merge([$context.payload, $objectIDs]))
+      )
+- name: validateDestPayload
+  template: |
+    (
+      $assert($not($context.payload.filters and $context.payload.objectIDs), "event can’t have both objectIds and filters at the same time.");
+      $assert($context.payload.filters or $context.payload.objectIDs, "Either filters or  objectIds is required.");
+    )
+- name: payloadBatchWorkflow
+  condition: $exists($context.batchMode)
+  template: |
+    $context.payload
+  onComplete: return
+- name: payloadSingleWorkflow
+  condition: $not($exists($context.batchMode))
+  template: |
+    {
+      "body": {
+        "JSON": {"events": [$context.payload]},
+        "JSON_ARRAY": {},
+        "XML": {},
+        "FORM": {}
+      },
+      "version": "1",
+      "type": "REST",
+      "method": "POST",
+      "endpoint": $ENDPOINT,
+      "headers": {
+        "X-Algolia-Application-Id": destination.Config.applicationId,
+        "X-Algolia-API-Key": destination.Config.apiKey
+      },
+      "params": {},
+      "files": {}
+    }
+
