@@ -348,6 +348,9 @@ function responseBuilderSimple(
   if (sessionStart) {
     set(finalPayload, "sc", "start");
   }
+  else {
+    set(finalPayload, "sc", "end");
+  }
 
   const integrationsClientId = message.integrations
     ? message.integrations[gaDisplayName]
