@@ -21,6 +21,7 @@ steps:
 - name: batchEvents
   template: |
     (
+      /* Prepares batch requests*/
       $prepareBatchRequest := function($batch) {(
         {
           "body": {

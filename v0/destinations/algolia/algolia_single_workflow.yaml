@@ -50,7 +50,7 @@ steps:
     condition: $context.payload.eventType = "click"
     template: |
       (
-        $validProducts := message.properties.products[$exists($.objectId) and $exists($.position)]#$i[$i<20];
+        $validProducts := message.properties.products[$exists(objectId) and $exists(position)]#$i[$i<20];
         $objectAndPositionIds := {
           "objectIDs": $validProducts.objectId,
           "positions": $validProducts.position
@@ -70,8 +70,8 @@ steps:
 - name: validateDestPayload
   template: |
     (
-      $assert($not($context.payload.filters and $context.payload.objectIDs), "event can’t have both objectIds and filters at the same time.");
-      $assert($context.payload.filters or $context.payload.objectIDs, "Either filters or  objectIds is required.");
+      $assert($context.payload.($not(filters and objectIDs)), "event can't have both objectIds and filters at the same time.");
+      $assert($context.payload.(filters or objectIDs), "Either filters or  objectIds is required.");
     )
 - name: payloadBatchWorkflow
   condition: $exists($context.batchMode)
