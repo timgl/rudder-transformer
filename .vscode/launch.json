@@ -18,6 +18,19 @@
             "runtimeExecutable":"/usr/local/bin/node"
         },
         {
+            "name": "hs-cdk",
+            "type": "node",
+            "request": "launch",
+            "args": [
+                "${workspaceRoot}/v0/destinations/hs/index.js",
+            ],
+            "runtimeArgs": [
+                "--nolazy"
+            ],
+            "sourceMaps": true,
+            "runtimeExecutable":"/usr/local/bin/node"
+        },
+        {
             "runtimeExecutable":"/usr/local/bin/node",
             "type": "node",
             "request": "launch",
@@ -25,6 +38,96 @@
             "program": "${workspaceFolder}/node_modules/.bin/jest",
             "args": [
                 "${fileBasenameNoExtension}",
+                "--config",
+                "jest.config.js"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "disableOptimisticBPs": true,
+            "windows": {
+                "program": "${workspaceFolder}/node_modules/jest/bin/jest",
+            }
+        },
+        {
+            "runtimeExecutable":"/usr/local/bin/node",
+            "type": "node",
+            "request": "launch",
+            "name": "Debug HS CDK",
+            "program": "${workspaceFolder}/node_modules/.bin/jest",
+            "args": [
+                "__tests__/hubspot-cdk.test.js",
+                "--config",
+                "jest.config.js"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "disableOptimisticBPs": true,
+            "windows": {
+                "program": "${workspaceFolder}/node_modules/jest/bin/jest",
+            }
+        },
+        {
+            "runtimeExecutable":"/usr/local/bin/node",
+            "type": "node",
+            "request": "launch",
+            "name": "Debug HS",
+            "program": "${workspaceFolder}/node_modules/.bin/jest",
+            "args": [
+                "__tests__/hubspot.test.js",
+                "--config",
+                "jest.config.js"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "disableOptimisticBPs": true,
+            "windows": {
+                "program": "${workspaceFolder}/node_modules/jest/bin/jest",
+            }
+        },
+        {
+            "runtimeExecutable":"/usr/local/bin/node",
+            "type": "node",
+            "request": "launch",
+            "name": "Debug Algolia",
+            "program": "${workspaceFolder}/node_modules/.bin/jest",
+            "args": [
+                "__tests__/algolia.test.js",
+                "--config",
+                "jest.config.js"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "disableOptimisticBPs": true,
+            "windows": {
+                "program": "${workspaceFolder}/node_modules/jest/bin/jest",
+            }
+        },
+        {
+            "runtimeExecutable":"/usr/local/bin/node",
+            "type": "node",
+            "request": "launch",
+            "name": "Debug Algolia CDK",
+            "program": "${workspaceFolder}/node_modules/.bin/jest",
+            "args": [
+                "__tests__/algolia-cdk.test.js",
+                "--config",
+                "jest.config.js"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "disableOptimisticBPs": true,
+            "windows": {
+                "program": "${workspaceFolder}/node_modules/jest/bin/jest",
+            }
+        },
+        {
+            "runtimeExecutable":"/usr/local/bin/node",
+            "type": "node",
+            "request": "launch",
+            "name": "Debug Pinterest CDK",
+            "program": "${workspaceFolder}/node_modules/.bin/jest",
+            "args": [
+                "__tests__/pinterestConversion-cdk.test.js",
                 "--config",
                 "jest.config.js"
             ],

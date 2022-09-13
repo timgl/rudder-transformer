@@ -26,7 +26,6 @@ inputData.forEach((input, index) => {
       expect(JSON.parse(JSON.stringify(result.output))).toEqual(expected);
     } catch (error) {
       expect(error.message).toEqual(expected.message);
-      ;
     }    
   });
 });
