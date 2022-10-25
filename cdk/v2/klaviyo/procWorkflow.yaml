@@ -1,0 +1,48 @@
+bindings:
+  - name: EventType
+    path: ../../../constants/index
+  - name: MappedToDestinationKey
+    path: ../../../constants/index
+  - name: SourceKeys
+    path: ../../../v0/util/data/GenericFieldMapping.json
+    exportAll: true
+  - path: ../../../v0/destinations/pinterest_tag/utils
+  - name: ENDPOINT
+    path: ../../../v0/destinations/pinterest_tag/config
+steps:
+  - name: validateInput
+    template: |
+      (
+        $assert($exists(message.type), "Message type is not present. Aborting message.");
+        $assert(message.type in [$EventType.IDENTIFY, $EventType.TRACK, $EventType.PAGE, $EventType.SCREEN, $EventType.GROUP], 
+          "message type " & message.type & " is not supported")
+      )
+
+  - name: identifyStep
+    description: Step to process identify events
+    condition: message.type = $EventType.IDENTIFY
+    steps:
+      - name: enrichIdentifyForRETL
+        description: Step to enrich identify payload when source is RETL
+        condition: $exists($getByPaths(message, $MappedToDestinationKey)[0])
+        template: |
+          (
+            $identifierType = message.context.externalId.0.identifierType;
+            $identifierValue = message.context.externalId.0.id;
+            message.(
+              $merge([
+                $,
+
+              ])
+            )
+          )
+      - name: validateConfigs
+        description: Validate if the configs are present which are required to process identify events
+        template: |
+          (
+            $assert($exists(destination.Config.publicApiKey), "[Klaviyo]:: Public API Key is a required field for identify events");
+            $assert($exists(destination.Config.privateApiKey), "[Klaviyo]:: Private API Key is a required field for identify events");
+          )
+      - name: 
+
+  
