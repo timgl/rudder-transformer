@@ -1,0 +1,35 @@
+name: builds
+
+on:
+  push:
+    branches:
+      - "test-github-actions-secret"
+
+jobs:
+  docker-oss:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v2
+      -
+        name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          registry: index.docker.io/v1
+          username: githubpublicrudderstack
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          # platforms: linux/amd64,linux/arm64
+          push: true
+          tags: rudderlabs/develop-rudder-transformer:test-github-actions-dummy
+          # labels: ${{ steps.meta.outputs.labels }}
+          # build-args: |
+          #   BUILD_DATE=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.created'] }}
+          #   VERSION=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.version'] }}
+          #   COMMIT_HASH=${{ github.sha }}
+          #   REVISION=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.revision'] }}
