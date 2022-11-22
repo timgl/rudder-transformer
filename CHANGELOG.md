@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.1](https://github.com/rudderlabs/rudder-transformer/compare/v1.7.0...v1.7.1) (2022-11-22)
+
+
+### Miscellaneous
+
+* add cdk live comparison time stats ([#1529](https://github.com/rudderlabs/rudder-transformer/issues/1529)) ([8a526fa](https://github.com/rudderlabs/rudder-transformer/commit/8a526faa4656983014373c9b1d152809b8f77b32))
+* stop using cpu count for workers ([#1582](https://github.com/rudderlabs/rudder-transformer/issues/1582)) ([6359737](https://github.com/rudderlabs/rudder-transformer/commit/6359737701948ca7d08dd268cdaf1af36425170b))
+
 ## [1.7.0](https://github.com/rudderlabs/rudder-transformer/compare/v1.6.0...v1.7.0) (2022-11-17)
 
 
